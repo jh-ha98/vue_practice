@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+        }
+
+        #app {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .wrap-item {
+            padding: .4rem;
+            border: 1px solid black;
+            width: 50vw;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .data-table,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="vue-app"></div>
+    <script>
+        new Vue({
+            template: `
+            <div class="board-wrap">
+                <select v-model="searchType">
+                    <option value="">전체</option>
+                    <option value="userId">userId</option>
+                    <option value="id">ID</option>
+                    <option value="title">title</option>
+                </select>
+                <!-- 검색 버튼 위치 -->
+                <input type="text" v-model="searchText">
+                <button @click="search">검색</button>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>userId</th>
+                            <th>Id</th>
+                            <th>title</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- boardData를 출력하려면 v-for과 key에 뭐를 넣어야할지 생각해보기 -->
+                        <tr v-for="(boardData, index) in boardDatas" :key="index">
+                            <td>{{boardData.userId}}</td> 
+                            <td>{{boardData.id}}</td> 
+                            <td @click="onTitleClicked(boardData.body)">{{boardData.title}}</td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>`,
+            data: {
+                boardDatas: [],
+                searchType: '',
+                searchText: ''
+            },
+            methods: {
+                search() {
+                    let url = "https://jsonplaceholder.typicode.com/posts";
+                    if (this.searchType != '')
+                        url += "?" + this.searchType + "=" + this.searchText;
+
+                    fetch(url, { method: 'get' })
+                        .then(res => res.text())
+                        .then(data => {
+                            const objData = JSON.parse(data);
+                            this.boardDatas = objData;
+                        })
+                        .catch(console.error);
+                },
+                onTitleClicked(body) {
+                    alert(body);
+                }
+            },
+        }).$mount('#vue-app')
+    </script>
+
+</body>
+
+</html>
