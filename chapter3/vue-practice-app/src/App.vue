@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import 'bulma'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 import SubmitNotifyForm from './components/SubmitNotifyForm.vue';
 import JoinForm from './components/JoinForm.vue';
 import GlobalMixin from './mixins/GlobalMixin';
@@ -36,8 +38,8 @@ export default {
 </script>
 
 <style>
-@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css';
-@import 'https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css';
+/* @import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css';
+@import 'https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css'; */
 
 html,
 body {
